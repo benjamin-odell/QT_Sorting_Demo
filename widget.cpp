@@ -42,6 +42,25 @@ Widget::Widget(QWidget *parent)
 
     main_layout->addLayout(input_row);
 
+    //set randomize button signal
+    connect(random, SIGNAL(clicked()), this, SLOT(randomize()));
+
 }
 
 Widget::~Widget() = default;
+
+void Widget::randomize()
+{
+    //creates ten random numbers in the numbers object
+    QString nums = "";
+    for(int i = 0; i < 10; i++){
+        int n = (std::rand() % 15) + 1;
+        //add a commad if not fist number
+        if(i != 0)
+            nums.append(",");
+        nums.append(QVariant(n).toString());
+    }
+
+    //changes number text to show our numbers
+    numbers->setText(nums);
+}

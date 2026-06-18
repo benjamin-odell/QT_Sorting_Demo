@@ -30,6 +30,9 @@ private:
 
 
     //bars for the sorting demo
-    QGraphicsRectItem* bars[];
+    std::vector<QGraphicsRectItem> bars;
+
+private slots:
+    void randomize();
 };
 #endif // WIDGET_H
