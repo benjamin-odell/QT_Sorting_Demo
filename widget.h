@@ -2,6 +2,13 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsRectItem>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPushButton>
 
 class Widget : public QWidget
 {
@@ -10,5 +17,19 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = nullptr);
     ~Widget() override;
+
+private:
+    QGraphicsView *view;
+    QGraphicsScene* scene;
+
+    //number to sort
+    QLineEdit* numbers;
+
+    QPushButton* submit;
+    QPushButton* random;
+
+
+    //bars for the sorting demo
+    QGraphicsRectItem* bars[];
 };
 #endif // WIDGET_H
