@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QList>
 #include <QSpinBox>
+#include <vector>
 
 class Widget : public QWidget
 {
@@ -38,6 +39,8 @@ private:
 
     QBrush brush;
     QPen pen;
+
+    std::vector<int> nums;
 
 
     //bars for the sorting demo

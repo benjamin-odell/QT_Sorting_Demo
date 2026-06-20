@@ -87,7 +87,6 @@ void Widget::create_bars(){
     //get all the numbers from the numbers row
     QString s = numbers->text();
     QString n = "";
-    std::vector<int> nums;
     bool is_number = false;
     for(QChar c : std::as_const(s)){
         //loop untill with find a QChar thats not a number
@@ -138,6 +137,8 @@ void Widget::clear()
 
     //clear bars
     bars.clear();
+    //clear nums
+    nums.clear();
 
     scene->clear();
 }

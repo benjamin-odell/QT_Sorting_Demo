@@ -10,6 +10,8 @@ qt_add_executable(Sorting_Demo
     main.cpp
     widget.cpp
     widget.h
+    sorting_algo.h sorting_algo.cpp
+
 )
 
 target_link_libraries(Sorting_Demo
