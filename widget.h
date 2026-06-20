@@ -9,6 +9,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QList>
+#include <QSpinBox>
 
 class Widget : public QWidget
 {
@@ -19,6 +21,10 @@ public:
     ~Widget() override;
 
 private:
+    void create_bars();
+    void update_bars();
+    void clear();
+
     QGraphicsView *view;
     QGraphicsScene* scene;
 
@@ -27,12 +33,19 @@ private:
 
     QPushButton* submit;
     QPushButton* random;
+    //number of value to randomize
+    QSpinBox* rand_num;
+
+    QBrush brush;
+    QPen pen;
 
 
     //bars for the sorting demo
-    std::vector<QGraphicsRectItem> bars;
+    QList<QGraphicsRectItem*> bars;
 
 private slots:
     void randomize();
+
+    void sort();
 };
 #endif // WIDGET_H
