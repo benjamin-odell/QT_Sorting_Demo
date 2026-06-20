@@ -106,15 +106,15 @@ void Widget::create_bars(){
                 n = "";
             }
         }
+    }
 
-        //add number to the nums row
-        int num = n.toInt(&is_number);
-        if(is_number) //makes sure that num is, in fact, a number
-        {
-            nums.push_back(num);
-            //clear number
-            n = "";
-        }
+    //add number to the nums row
+    int num = n.toInt(&is_number);
+    if(is_number) //makes sure that num is, in fact, a number
+    {
+        nums.push_back(num);
+        //clear number
+        n = "";
     }
 
     //after getting all of the numbers create the bars
