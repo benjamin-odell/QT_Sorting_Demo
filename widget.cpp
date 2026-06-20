@@ -37,7 +37,12 @@ Widget::Widget(QWidget *parent)
     submit = new QPushButton("Sort!", this);
     //Button to randomize the numbers
     random = new QPushButton("Randomize", this);
+    //Spin box for random number
+    rand_num = new QSpinBox(this);
+    rand_num->setMinimum(3);
+    rand_num->setMaximum(50);
 
+    input_row->addWidget(rand_num);
     input_row->addWidget(random);
     input_row->addWidget(numbers);
     input_row->addWidget(submit);
@@ -56,9 +61,10 @@ Widget::~Widget() = default;
 
 void Widget::randomize()
 {
+    int c = rand_num->value();
     //creates ten random numbers in the numbers object
     QString nums = "";
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < c; i++){
         int n = (std::rand() % 15) + 1;
         //add a commad if not fist number
         if(i != 0)
@@ -71,14 +77,13 @@ void Widget::randomize()
 }
 
 void Widget::sort(){
-    clear();
     create_bars();
-    //view->update();
-    scene->update();
-    view->update();
 }
 
 void Widget::create_bars(){
+    //clear scene
+    clear();
+
     //get all the numbers from the numbers row
     QString s = numbers->text();
     QString n = "";
@@ -86,9 +91,9 @@ void Widget::create_bars(){
     bool is_number = false;
     for(QChar c : std::as_const(s)){
         //loop untill with find a QChar thats not a number
-        if(c.isNumber())
+        if(c.isDigit())
         {
-            n += c;
+            n.append(c);
         }
         else
         {
@@ -118,6 +123,10 @@ void Widget::create_bars(){
         qDebug() << nums[i];
         bars.append(scene->addRect(i * 15,0,10,-10 * nums[i],pen,brush));
     }
+
+    //update scene
+    scene->update();
+    view->update();
 }
 
 void Widget::clear()
