@@ -4,13 +4,13 @@
 #include <QObject>
 #include <vector>
 
-class sorting_algo
+class sorting_algo : QObject
 {
     Q_OBJECT
 public:
     sorting_algo();
 
-    void sort(std::vector<int>* arr);
+    virtual void sort(std::vector<int>* arr);
 
 signals:
 
