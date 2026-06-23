@@ -12,6 +12,7 @@
 #include <QList>
 #include <QSpinBox>
 #include <vector>
+#include "sorting_algo.h"
 
 class Widget : public QWidget
 {
@@ -46,9 +47,12 @@ private:
     //bars for the sorting demo
     QList<QGraphicsRectItem*> bars;
 
+    sorting_algo* sorter;
+
 private slots:
     void randomize();
-
     void sort();
+    void update();
+    void edit();
 };
 #endif // WIDGET_H

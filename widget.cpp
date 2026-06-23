@@ -1,5 +1,6 @@
 #include "widget.h"
 #include <vector>
+#include "insertion_sort.h"
 //#include <QDebug>
 
 Widget::Widget(QWidget *parent)
@@ -21,9 +22,6 @@ Widget::Widget(QWidget *parent)
 
     //adds scene to view
     view->setScene(scene);
-
-    //add a demo rectangle to the scene
-    QGraphicsRectItem* temp_rect = scene->addRect(0,0,10,-10,pen,brush);
 
     QVBoxLayout* main_layout = new QVBoxLayout(this);
     main_layout->addWidget(view);
@@ -55,6 +53,14 @@ Widget::Widget(QWidget *parent)
     //connect submit button to sort slot
     connect(submit, SIGNAL(clicked()),this, SLOT(sort()));
 
+    //create test sorting object
+    sorter = new insertion_sort(50);
+    //connect test sorter to widget
+    connect(sorter, SIGNAL(updated()), this, SLOT(update()));
+
+
+    //update bars when you edit the line
+    connect(numbers,SIGNAL(textChanged(QString)),this,SLOT(edit()));
 }
 
 Widget::~Widget() = default;
@@ -74,9 +80,33 @@ void Widget::randomize()
 
     //changes number text to show our numbers
     numbers->setText(nums);
+
+    //updated the display
+    create_bars();
 }
 
 void Widget::sort(){
+    create_bars();
+    //sort the list
+    sorter->sort(nums);
+}
+
+void Widget::update()
+{
+    for(int i = 0; i < bars.size(); i++){
+        bars[i]->setRect(QRect(i * 15,0,10, -10 * nums[i]));
+    }
+
+
+    //update view
+    scene->update();
+    view->update();
+
+    sorter->delay();
+}
+
+void Widget::edit()
+{
     create_bars();
 }
 
