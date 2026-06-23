@@ -26,6 +26,7 @@ private:
     void create_bars();
     void update_bars();
     void clear();
+    void add_nums_to_line_edit();
 
     QGraphicsView *view;
     QGraphicsScene* scene;

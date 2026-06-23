@@ -54,7 +54,7 @@ Widget::Widget(QWidget *parent)
     connect(submit, SIGNAL(clicked()),this, SLOT(sort()));
 
     //create test sorting object
-    sorter = new insertion_sort(50);
+    sorter = new insertion_sort(0);
     //connect test sorter to widget
     connect(sorter, SIGNAL(updated()), this, SLOT(update()));
 
@@ -67,22 +67,18 @@ Widget::~Widget() = default;
 
 void Widget::randomize()
 {
+    //clear nums
+    nums.clear();
     int c = rand_num->value();
-    //creates ten random numbers in the numbers object
-    QString nums = "";
+    //creates c random numbers in the numbers object
     for(int i = 0; i < c; i++){
-        int n = (std::rand() % 15) + 1;
-        //add a commad if not fist number
-        if(i != 0)
-            nums.append(",");
-        nums.append(QVariant(n).toString());
+        int n = (std::rand() % (15 + c)) + 1;
+        //add n to nums
+        nums.push_back(n);
     }
 
-    //changes number text to show our numbers
-    numbers->setText(nums);
-
-    //updated the display
-    create_bars();
+    //change line edit text to match numbers
+    add_nums_to_line_edit();
 }
 
 void Widget::sort(){
@@ -101,6 +97,8 @@ void Widget::update()
     //update view
     scene->update();
     view->update();
+
+    add_nums_to_line_edit();
 
     sorter->delay();
 }
@@ -171,4 +169,17 @@ void Widget::clear()
     nums.clear();
 
     scene->clear();
+}
+
+void Widget::add_nums_to_line_edit()
+{
+    QString text = "";
+    for(int i = 0; i < nums.size(); i++){
+        if(i != 0)
+            text.append(",");
+
+        text.append(QVariant(nums[i]).toString());
+    }
+
+    numbers->setText(text);
 }
