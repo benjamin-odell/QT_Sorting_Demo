@@ -1,6 +1,6 @@
-# First Level Heading
+# QT Sorting Demo
 
-Paragraph.
+The aim of this project is the demo various sorting algorithms using QT and C++
 
 ## Second Level Heading
 
@@ -46,6 +46,6 @@ Paragraph.
 Second Level Heading in Alternate Style
 ---------------------------------------
 
-Paragraph.
-
-[1]: https://www.qt.io
+## Sources
+* [QT](https://www.qt.io/)
+* [QT Creator](https://www.qt.io/development/tools/qt-creator-ide)
