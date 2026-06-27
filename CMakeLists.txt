@@ -12,6 +12,8 @@ qt_add_executable(Sorting_Demo
     widget.h
     sorting_algo.h sorting_algo.cpp
     insertion_sort.h insertion_sort.cpp
+    README.md
+
 
 )
 
