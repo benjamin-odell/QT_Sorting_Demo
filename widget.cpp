@@ -2,6 +2,7 @@
 #include <vector>
 #include "insertion_sort.h"
 //#include <QDebug>
+#include <QApplication>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -54,7 +55,7 @@ Widget::Widget(QWidget *parent)
     connect(submit, SIGNAL(clicked()),this, SLOT(sort()));
 
     //create test sorting object
-    sorter = new insertion_sort(0);
+    sorter = new insertion_sort(100);
     //connect test sorter to widget
     connect(sorter, SIGNAL(updated()), this, SLOT(update()));
 
@@ -99,6 +100,8 @@ void Widget::update()
     view->update();
 
     add_nums_to_line_edit();
+
+    qApp->processEvents();
 
     sorter->delay();
 }
