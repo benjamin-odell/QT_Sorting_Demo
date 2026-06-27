@@ -19,6 +19,7 @@ Widget::Widget(QWidget *parent)
     //Create our pens and brushes
     brush = QBrush(Qt::blue);
     pen = QPen(Qt::blue);
+    highlight = QPen(Qt::yellow);
 
 
     //adds scene to view
@@ -57,7 +58,8 @@ Widget::Widget(QWidget *parent)
     //create test sorting object
     sorter = new insertion_sort(100);
     //connect test sorter to widget
-    connect(sorter, SIGNAL(updated()), this, SLOT(update()));
+    connect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
+    connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 
 
     //update bars when you edit the line
@@ -88,22 +90,39 @@ void Widget::sort(){
     sorter->sort(nums);
 }
 
-void Widget::update()
+void Widget::update(int n)
 {
     for(int i = 0; i < bars.size(); i++){
-        bars[i]->setRect(QRect(i * 15,0,10, -10 * nums[i]));
+        //reset all outlines to default
+        bars[i]->setPen(pen);
     }
+
+    add_nums_to_line_edit();
+
+
+    //highlight currently selected bar
+    bars[n]->setPen(highlight);
 
 
     //update view
     scene->update();
     view->update();
 
-    add_nums_to_line_edit();
 
     qApp->processEvents();
 
     sorter->delay();
+}
+
+void Widget::sorted()
+{
+    //loop through and change pen back to default
+    for(int i = 0; i < bars.size(); i++){
+        bars[i]->setPen(pen);
+    }
+
+    //update scene
+    scene->update();
 }
 
 void Widget::edit()

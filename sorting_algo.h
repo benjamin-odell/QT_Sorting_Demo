@@ -22,7 +22,7 @@ signals:
     //signal for when the array is fully sorted
     void sorted();
     //singal for each iteration in the sorting algorithium
-    void updated();
+    void updated(int n);
 };
 
 #endif // SORTING_ALGO_H

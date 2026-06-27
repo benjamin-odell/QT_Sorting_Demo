@@ -16,10 +16,11 @@ void insertion_sort::sort(std::vector<int> &arr)
                 arr[j - 1] = temp;
                 j--;
 
-                emit updated();
+                emit updated(j);
             }
         }
-        emit updated();
+        emit updated(i);
+
     }
 
     emit sorted();

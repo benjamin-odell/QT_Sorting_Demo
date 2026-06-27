@@ -41,6 +41,7 @@ private:
 
     QBrush brush;
     QPen pen;
+    QPen highlight;
 
     std::vector<int> nums;
 
@@ -53,7 +54,8 @@ private:
 private slots:
     void randomize();
     void sort();
-    void update();
+    void update(int n);
+    void sorted();
     void edit();
 };
 #endif // WIDGET_H
