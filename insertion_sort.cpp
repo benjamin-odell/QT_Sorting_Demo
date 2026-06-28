@@ -1,6 +1,7 @@
 #include "insertion_sort.h"
 
 insertion_sort::insertion_sort(int delay_time) : sorting_algo(delay_time) {
+    name = "Insertion Sort";
 }
 
 void insertion_sort::sort(std::vector<int> &arr)

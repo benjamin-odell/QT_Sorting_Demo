@@ -1,6 +1,8 @@
 #include "selection_sort.h"
 
-selection_sort::selection_sort(int t) : sorting_algo(t) {}
+selection_sort::selection_sort(int t) : sorting_algo(t) {
+    name = "Selection Sort";
+}
 
 void selection_sort::sort(std::vector<int> &arr)
 {

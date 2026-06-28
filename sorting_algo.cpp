@@ -14,3 +14,8 @@ void sorting_algo::delay()
     QThread::msleep(delay_time);
     return;
 }
+
+QString sorting_algo::get_name()
+{
+    return name;
+}

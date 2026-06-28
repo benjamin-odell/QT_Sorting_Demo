@@ -1,7 +1,5 @@
 #include "widget.h"
 #include <vector>
-#include "insertion_sort.h"
-#include "selection_sort.h"
 //#include <QDebug>
 #include <QApplication>
 
@@ -48,6 +46,13 @@ Widget::Widget(QWidget *parent)
     input_row->addWidget(numbers);
     input_row->addWidget(submit);
 
+    //setup combo box
+    combo_box = new QComboBox(this);
+    combo_box->addItem("Insertion Sort", 0);
+    combo_box->addItem("Selection Sort", 1);
+    connect(combo_box,SIGNAL(currentIndexChanged(int)),this,SLOT(select_sort()));
+
+    main_layout->addWidget(combo_box);
     main_layout->addLayout(input_row);
 
     //set randomize button signal
@@ -57,8 +62,7 @@ Widget::Widget(QWidget *parent)
     connect(submit, SIGNAL(clicked()),this, SLOT(sort()));
 
     //create test sorting object
-   // sorter = new insertion_sort(100);
-    sorter = new selection_sort(100);
+    sorter = insertion;
     //connect test sorter to widget
     connect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
     connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
@@ -130,6 +134,30 @@ void Widget::sorted()
 void Widget::edit()
 {
     create_bars();
+}
+
+void Widget::select_sort()
+{
+    Sort s = (Sort)combo_box->currentIndex();
+    switch_sort(s);
+}
+
+void Widget::switch_sort(Sort s)
+{
+    disconnect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
+    disconnect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
+
+    switch(s){
+    case INSERTION:
+        sorter = insertion;
+        break;
+    case SELECTION:
+        sorter = selection;
+        break;
+    }
+
+    connect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
+    connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 }
 
 void Widget::create_bars(){

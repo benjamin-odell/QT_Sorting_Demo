@@ -13,9 +13,13 @@ public:
     virtual void sort(std::vector<int>& arr);
 
     void delay();
+    QString get_name();
 
 private:
     int delay_time;
+
+protected:
+    QString name;
 
 signals:
 

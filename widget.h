@@ -11,8 +11,11 @@
 #include <QPushButton>
 #include <QList>
 #include <QSpinBox>
+#include <QComboBox>
 #include <vector>
 #include "sorting_algo.h"
+#include "insertion_sort.h"
+#include "selection_sort.h"
 
 class Widget : public QWidget
 {
@@ -39,6 +42,10 @@ private:
     //number of value to randomize
     QSpinBox* rand_num;
 
+    //time to delay between sorting actions
+    int delay_time = 100;
+
+    //graphics
     QBrush brush;
     QPen pen;
     QPen highlight;
@@ -51,11 +58,27 @@ private:
 
     sorting_algo* sorter;
 
+    //sorting algo enum
+    enum Sort{
+        INSERTION,
+        SELECTION
+    };
+
+    //sort selection combo box
+    QComboBox* combo_box;
+
+    //create base for each sorting algorithm
+    sorting_algo* insertion = new insertion_sort(delay_time);
+    sorting_algo* selection = new selection_sort(delay_time);
+
+    void switch_sort(Sort s);
+
 private slots:
     void randomize();
     void sort();
     void update(int n);
     void sorted();
     void edit();
+    void select_sort();
 };
 #endif // WIDGET_H
