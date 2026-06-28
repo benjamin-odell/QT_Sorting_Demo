@@ -43,12 +43,12 @@ private:
     QSpinBox* rand_num;
 
     //time to delay between sorting actions
-    int delay_time = 100;
+    int delay_time = 250;
 
     //graphics
     QBrush brush;
-    QPen pen;
-    QPen highlight;
+    QList<QPen> pens;
+    void init_pens();
 
     std::vector<int> nums;
 
@@ -76,7 +76,7 @@ private:
 private slots:
     void randomize();
     void sort();
-    void update(int n);
+    void update(int n, int w = -1);
     void sorted();
     void edit();
     void select_sort();

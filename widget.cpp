@@ -17,8 +17,7 @@ Widget::Widget(QWidget *parent)
 
     //Create our pens and brushes
     brush = QBrush(Qt::blue);
-    pen = QPen(Qt::blue);
-    highlight = QPen(Qt::yellow);
+    init_pens();
 
 
     //adds scene to view
@@ -38,7 +37,7 @@ Widget::Widget(QWidget *parent)
     random = new QPushButton("Randomize", this);
     //Spin box for random number
     rand_num = new QSpinBox(this);
-    rand_num->setMinimum(3);
+    rand_num->setMinimum(5);
     rand_num->setMaximum(50);
 
     input_row->addWidget(rand_num);
@@ -64,7 +63,7 @@ Widget::Widget(QWidget *parent)
     //create test sorting object
     sorter = insertion;
     //connect test sorter to widget
-    connect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
+    connect(sorter, SIGNAL(updated(int,int)), this, SLOT(update(int,int)));
     connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 
 
@@ -93,29 +92,36 @@ void Widget::randomize()
 void Widget::sort(){
     create_bars();
     //sort the list
+    numbers->setEnabled(false);
     sorter->sort(nums);
 }
 
-void Widget::update(int n)
+void Widget::update(int n, int w)
 {
     for(int i = 0; i < bars.size(); i++){
         //reset all outlines to default
-        bars[i]->setPen(pen);
+        bars[i]->setRect(i * 15,0,10,-10 * nums[i]);
+        bars[i]->setPen(pens[0]);
     }
 
-    add_nums_to_line_edit();
+
+
+  //  add_nums_to_line_edit();
+    if(w != -1){
+        bars[w]->setPen(pens[2]);
+    }
 
 
     //highlight currently selected bar
-    bars[n]->setPen(highlight);
+    bars[n]->setPen(pens[1]);
+
 
 
     //update view
     scene->update();
     view->update();
 
-
-    qApp->processEvents();
+    //qApp->processEvents();
 
     sorter->delay();
 }
@@ -124,11 +130,13 @@ void Widget::sorted()
 {
     //loop through and change pen back to default
     for(int i = 0; i < bars.size(); i++){
-        bars[i]->setPen(pen);
+
+        bars[i]->setPen(pens[0]);
     }
 
     //update scene
     scene->update();
+    numbers->setEnabled(true);
 }
 
 void Widget::edit()
@@ -144,7 +152,8 @@ void Widget::select_sort()
 
 void Widget::switch_sort(Sort s)
 {
-    disconnect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
+    //disconnect current sorter from all slots
+    disconnect(sorter, SIGNAL(updated(int,int)), this, SLOT(update(int,int)));
     disconnect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 
     switch(s){
@@ -156,7 +165,8 @@ void Widget::switch_sort(Sort s)
         break;
     }
 
-    connect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
+    //connect new sorter to slots
+    connect(sorter, SIGNAL(updated(int,int)), this, SLOT(update(int,int)));
     connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 }
 
@@ -200,7 +210,7 @@ void Widget::create_bars(){
     for(int i = 0; i < nums.size(); i++)
     {
         qDebug() << nums[i];
-        bars.append(scene->addRect(i * 15,0,10,-10 * nums[i],pen,brush));
+        bars.append(scene->addRect(i * 15,0,10,-10 * nums[i],pens[0],brush));
     }
 
     //update scene
@@ -234,4 +244,11 @@ void Widget::add_nums_to_line_edit()
     }
 
     numbers->setText(text);
+}
+
+void Widget::init_pens()
+{
+    pens.append(QPen(Qt::blue));
+    pens.append(QPen(Qt::yellow));
+    pens.append(QPen(QColor("#e8ad55")));
 }
