@@ -1,6 +1,7 @@
 #include "widget.h"
 #include <vector>
 #include "insertion_sort.h"
+#include "selection_sort.h"
 //#include <QDebug>
 #include <QApplication>
 
@@ -56,7 +57,8 @@ Widget::Widget(QWidget *parent)
     connect(submit, SIGNAL(clicked()),this, SLOT(sort()));
 
     //create test sorting object
-    sorter = new insertion_sort(100);
+   // sorter = new insertion_sort(100);
+    sorter = new selection_sort(100);
     //connect test sorter to widget
     connect(sorter, SIGNAL(updated(int)), this, SLOT(update(int)));
     connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));

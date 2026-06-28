@@ -13,6 +13,7 @@ qt_add_executable(Sorting_Demo
     sorting_algo.h sorting_algo.cpp
     insertion_sort.h insertion_sort.cpp
     README.md
+    selection_sort.h selection_sort.cpp
 
 
 )
