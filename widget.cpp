@@ -63,7 +63,7 @@ Widget::Widget(QWidget *parent)
     //create test sorting object
     sorter = insertion;
     //connect test sorter to widget
-    connect(sorter, SIGNAL(updated(int,int)), this, SLOT(update(int,int)));
+    connect(sorter, SIGNAL(updated(std::vector<int>)), this, SLOT(update(std::vector<int>)));
     connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 
 
@@ -96,7 +96,7 @@ void Widget::sort(){
     sorter->sort(nums);
 }
 
-void Widget::update(int n, int w)
+void Widget::update(std::vector<int> n)
 {
     for(int i = 0; i < bars.size(); i++){
         //reset all outlines to default
@@ -104,17 +104,10 @@ void Widget::update(int n, int w)
         bars[i]->setPen(pens[0]);
     }
 
-
-
-  //  add_nums_to_line_edit();
-    if(w != -1){
-        bars[w]->setPen(pens[2]);
+    //update outline of selected bars (backwards to avoid overlap)
+    for(int i = n.size() -1; i >= 0; i--){
+        bars[n[i]]->setPen(pens[i + 1]);
     }
-
-
-    //highlight currently selected bar
-    bars[n]->setPen(pens[1]);
-
 
 
     //update view
@@ -153,7 +146,7 @@ void Widget::select_sort()
 void Widget::switch_sort(Sort s)
 {
     //disconnect current sorter from all slots
-    disconnect(sorter, SIGNAL(updated(int,int)), this, SLOT(update(int,int)));
+    disconnect(sorter, SIGNAL(updated(std::vector<int>)), this, SLOT(update(std::vector<int>)));
     disconnect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 
     switch(s){
@@ -166,7 +159,7 @@ void Widget::switch_sort(Sort s)
     }
 
     //connect new sorter to slots
-    connect(sorter, SIGNAL(updated(int,int)), this, SLOT(update(int,int)));
+    connect(sorter, SIGNAL(updated(std::vector<int>)), this, SLOT(update(std::vector<int>)));
     connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
 }
 
@@ -250,5 +243,6 @@ void Widget::init_pens()
 {
     pens.append(QPen(Qt::blue));
     pens.append(QPen(Qt::yellow));
-    pens.append(QPen(QColor("#e8ad55")));
+    pens.append(QPen(QColor("#b25310")));
+    pens.append(QPen(QColor("#e27f8f")));
 }

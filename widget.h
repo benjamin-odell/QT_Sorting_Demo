@@ -76,7 +76,7 @@ private:
 private slots:
     void randomize();
     void sort();
-    void update(int n, int w = -1);
+    void update(std::vector<int> n);
     void sorted();
     void edit();
     void select_sort();

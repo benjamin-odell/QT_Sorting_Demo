@@ -16,14 +16,15 @@ void selection_sort::sort(std::vector<int> &arr)
                 //new smallest element
                 min = j;
             }
-            emit updated(j);
+            emit updated({j,i,min});
         }
 
         //swap with smallest element
+        emit updated({i,min});
         temp = arr[i];
         arr[i] = arr[min];
         arr[min] = temp;
-        emit updated(i);
+        emit updated({min,i});
     }
     emit sorted();
 }

@@ -26,7 +26,7 @@ signals:
     //signal for when the array is fully sorted
     void sorted();
     //singal for each iteration in the sorting algorithium
-    void updated(int n, int w = -1);
+    void updated(std::vector<int> n);
 };
 
 #endif // SORTING_ALGO_H
