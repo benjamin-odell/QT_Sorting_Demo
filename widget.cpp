@@ -47,8 +47,9 @@ Widget::Widget(QWidget *parent)
 
     //setup combo box
     combo_box = new QComboBox(this);
-    combo_box->addItem("Insertion Sort", 0);
-    combo_box->addItem("Selection Sort", 1);
+    combo_box->addItem("Insertion Sort");
+    combo_box->addItem("Selection Sort");
+    combo_box->addItem("Quick Sort");
     connect(combo_box,SIGNAL(currentIndexChanged(int)),this,SLOT(select_sort()));
 
     main_layout->addWidget(combo_box);
@@ -106,7 +107,8 @@ void Widget::update(std::vector<int> n)
 
     //update outline of selected bars (backwards to avoid overlap)
     for(int i = n.size() -1; i >= 0; i--){
-        bars[n[i]]->setPen(pens[i + 1]);
+        if(n[i] >= 0)
+            bars[n[i]]->setPen(pens[i + 1]);
     }
 
 
@@ -155,6 +157,9 @@ void Widget::switch_sort(Sort s)
         break;
     case SELECTION:
         sorter = selection;
+        break;
+    case QUICK:
+        sorter = quicksort;
         break;
     }
 

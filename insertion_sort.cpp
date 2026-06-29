@@ -16,9 +16,7 @@ void insertion_sort::sort(std::vector<int> &arr)
             while(j > 0 && arr[j] < arr[j-1]){
                 emit updated({j,j-1});
                 //swap the points
-                int temp = arr[j];
-                arr[j] = arr[j - 1];
-                arr[j - 1] = temp;
+                swap(arr,j,j-1);
                 j--;
                 emit updated({j, j+1});
                // delay();

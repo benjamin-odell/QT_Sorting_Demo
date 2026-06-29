@@ -21,6 +21,8 @@ private:
 protected:
     QString name;
 
+    void swap(std::vector<int> &arr, int a, int b);
+
 signals:
 
     //signal for when the array is fully sorted

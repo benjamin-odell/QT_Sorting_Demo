@@ -9,6 +9,10 @@ class quick_sort : public sorting_algo
     Q_OBJECT
 public:
     quick_sort(int n);
+    void sort(std::vector<int>& arr) override;
+
+private:
+    void quicksort(std::vector<int> &arr, int b, int e);
 };
 
 #endif // QUICK_SORT_H

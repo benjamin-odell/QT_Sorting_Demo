@@ -21,3 +21,11 @@ QString sorting_algo::get_name()
 {
     return name;
 }
+
+void sorting_algo::swap(std::vector<int> &arr, int a, int b)
+{
+    //swap the two values
+    int temp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = temp;
+}
