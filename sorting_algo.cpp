@@ -5,6 +5,11 @@
 
 sorting_algo::sorting_algo(int delay_time) : delay_time(delay_time) {}
 
+void sorting_algo::set_delay_time(int n)
+{
+    delay_time = n;
+}
+
 void sorting_algo::sort(std::vector<int> &arr)
 {
 

@@ -12,6 +12,7 @@
 #include <QList>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QLabel>
 #include <vector>
 #include "sorting_algo.h"
 #include "insertion_sort.h"
@@ -35,6 +36,12 @@ private:
     QGraphicsView *view;
     QGraphicsScene* scene;
 
+    //speed up and slow down buttons
+    QPushButton* speed_up;
+    QPushButton* speed_down;
+    int speed_change_amt = 1;
+    QLabel* speed;
+
     //number to sort
     QLineEdit* numbers;
 
@@ -44,7 +51,8 @@ private:
     QSpinBox* rand_num;
 
     //time to delay between sorting actions
-    int delay_time = 250;
+    const int base_delay_time = 250;
+    int delay_time = base_delay_time;
 
     //graphics
     QBrush brush;
@@ -83,5 +91,8 @@ private slots:
     void sorted();
     void edit();
     void select_sort();
+
+    //speed slots
+    void change_speed(int amt);
 };
 #endif // WIDGET_H

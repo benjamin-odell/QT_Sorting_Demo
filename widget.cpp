@@ -2,6 +2,7 @@
 #include <vector>
 //#include <QDebug>
 #include <QApplication>
+#include <QSignalMapper>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -24,6 +25,27 @@ Widget::Widget(QWidget *parent)
     view->setScene(scene);
 
     QVBoxLayout* main_layout = new QVBoxLayout(this);
+
+    //make speed control buttons
+    QHBoxLayout* speed_control_row = new QHBoxLayout(this);
+    speed_up = new QPushButton(">",this);
+    speed_down = new QPushButton("<",this);
+    speed = new QLabel("1x");
+
+    //setup slot connections
+    connect(speed_up, &QPushButton::clicked,this, [this]{ change_speed(2);});
+    connect(speed_down, &QPushButton::clicked,this, [this]{ change_speed(-2);});
+
+    speed_control_row->addWidget(speed_down);
+    speed_control_row->addWidget(speed);
+    speed_control_row->addWidget(speed_up);
+    speed_control_row->setAlignment(Qt::AlignRight);
+
+
+
+    //add speed row to main layout
+    main_layout->addLayout(speed_control_row);
+
     main_layout->addWidget(view);
 
     //Row for user input
@@ -145,6 +167,31 @@ void Widget::select_sort()
     switch_sort(s);
 }
 
+void Widget::change_speed(int amt)
+{
+    //change label
+    QString s_time = speed->text();
+    s_time.chop(1);
+    int s = s_time.toInt();
+    //change speed
+    if(amt > 0)
+        s *= amt;
+    else
+        s /= -amt;
+    //don't let speed go below one
+    if(s <= 1)
+        s = 1;
+    if(s >= 64)
+        s = 64;
+
+    //set delay time and update sorter
+    delay_time = base_delay_time / s;
+    sorter->set_delay_time(delay_time);
+
+    speed->setText(QVariant(s).toString().append("x"));
+
+}
+
 void Widget::switch_sort(Sort s)
 {
     //disconnect current sorter from all slots
@@ -162,6 +209,9 @@ void Widget::switch_sort(Sort s)
         sorter = quicksort;
         break;
     }
+
+    //ensure correct delay time
+    sorter->set_delay_time(delay_time);
 
     //connect new sorter to slots
     connect(sorter, SIGNAL(updated(std::vector<int>)), this, SLOT(update(std::vector<int>)));

@@ -10,6 +10,7 @@ class sorting_algo : public QObject
 public:
     sorting_algo(int delay_time);
 
+    void set_delay_time(int n);
     virtual void sort(std::vector<int>& arr);
 
     void delay();
