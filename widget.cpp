@@ -115,13 +115,21 @@ void Widget::randomize()
 
 void Widget::sort(){
     //check if sorter is sorting
-    if(sorter->is_active())
+    if(sorter->is_active()){
+        stop();
+        submit->setText("Sort!");
         return;
+    }
 
     create_bars();
+
+    //check to see if nums is empty
+    if(nums.empty())
+        return;
     //sort the list
     numbers->setEnabled(false);
     sorter->set_alive(true);
+    submit->setText("Stop!");
     sorter->sort(nums);
     sorter->set_alive(false);
 }
@@ -234,6 +242,8 @@ void Widget::stop()
 {
     sorter->set_alive(false);
     sorted();
+    //reset sort to begining
+    create_bars();
 }
 
 void Widget::create_bars(){
