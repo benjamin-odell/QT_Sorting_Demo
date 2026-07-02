@@ -6,6 +6,7 @@ void quick_sort::sort(std::vector<int> &arr)
 {
     //call quick sort for the whole array
     quicksort(arr,0, arr.size());
+    _IS_ALIVE_
     emit sorted();
 }
 
@@ -21,12 +22,14 @@ void quick_sort::quicksort(std::vector<int> &arr,int b, int e)
 
 
     for(int i = b; i < e; i++){
+        _IS_ALIVE_
         emit updated({i,lp,pivot});
         if(arr[i] < arr[pivot]){
             //increment pointer
             lp++;
             //swap values
             swap(arr,lp,i);
+            _IS_ALIVE_
             emit updated({i,lp,pivot});
         }
     }
@@ -34,6 +37,7 @@ void quick_sort::quicksort(std::vector<int> &arr,int b, int e)
     lp++;
    // emit updated({pivot,lp});
     swap(arr,lp,pivot);
+    _IS_ALIVE_
     emit updated({lp});
 
     //quick sort upper and lower partions

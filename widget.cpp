@@ -99,6 +99,7 @@ Widget::~Widget() = default;
 void Widget::randomize()
 {
     //clear nums
+    stop();
     nums.clear();
     int c = rand_num->value();
     //creates c random numbers in the numbers object
@@ -113,10 +114,16 @@ void Widget::randomize()
 }
 
 void Widget::sort(){
+    //check if sorter is sorting
+    if(sorter->is_active())
+        return;
+
     create_bars();
     //sort the list
     numbers->setEnabled(false);
+    sorter->set_alive(true);
     sorter->sort(nums);
+    sorter->set_alive(false);
 }
 
 void Widget::update(std::vector<int> n)
@@ -153,16 +160,19 @@ void Widget::sorted()
 
     //update scene
     scene->update();
+    view->update();
     numbers->setEnabled(true);
 }
 
 void Widget::edit()
 {
+    stop();
     create_bars();
 }
 
 void Widget::select_sort()
 {
+    stop();
     Sort s = (Sort)combo_box->currentIndex();
     switch_sort(s);
 }
@@ -194,6 +204,7 @@ void Widget::change_speed(int amt)
 
 void Widget::switch_sort(Sort s)
 {
+    stop();
     //disconnect current sorter from all slots
     disconnect(sorter, SIGNAL(updated(std::vector<int>)), this, SLOT(update(std::vector<int>)));
     disconnect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
@@ -216,6 +227,13 @@ void Widget::switch_sort(Sort s)
     //connect new sorter to slots
     connect(sorter, SIGNAL(updated(std::vector<int>)), this, SLOT(update(std::vector<int>)));
     connect(sorter,SIGNAL(sorted()),this,SLOT(sorted()));
+    stop();
+}
+
+void Widget::stop()
+{
+    sorter->set_alive(false);
+    sorted();
 }
 
 void Widget::create_bars(){

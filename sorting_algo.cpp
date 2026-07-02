@@ -27,6 +27,16 @@ QString sorting_algo::get_name()
     return name;
 }
 
+void sorting_algo::set_alive(bool b)
+{
+    is_alive = b;
+}
+
+bool sorting_algo::is_active()
+{
+    return is_alive;
+}
+
 void sorting_algo::swap(std::vector<int> &arr, int a, int b)
 {
     //swap the two values

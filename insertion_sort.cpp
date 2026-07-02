@@ -8,22 +8,26 @@ void insertion_sort::sort(std::vector<int> &arr)
 {
     std::vector<int> n;
     for(int i = 1; i < arr.size(); i++){
+        _IS_ALIVE_
         emit updated({i, i-1});
         if(arr[i] < arr[i-1]){
             //loop through the array until you find a value that it is larger than
             int j = i;
            // emit updated(j,j-1);
             while(j > 0 && arr[j] < arr[j-1]){
+                _IS_ALIVE_
                 emit updated({j,j-1});
                 //swap the points
                 swap(arr,j,j-1);
                 j--;
+                _IS_ALIVE_
                 emit updated({j, j+1});
                // delay();
             }
         }
     }
     int t = arr.size() - 1;
+    _IS_ALIVE_
     emit updated({t});
     emit sorted();
 }

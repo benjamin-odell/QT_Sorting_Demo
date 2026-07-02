@@ -16,15 +16,19 @@ void selection_sort::sort(std::vector<int> &arr)
                 //new smallest element
                 min = j;
             }
+            _IS_ALIVE_
             emit updated({j,i,min});
         }
 
         //swap with smallest element
+        _IS_ALIVE_
         emit updated({i,min});
         temp = arr[i];
         arr[i] = arr[min];
         arr[min] = temp;
+        _IS_ALIVE_
         emit updated({min,i});
     }
+    _IS_ALIVE_
     emit sorted();
 }

@@ -84,6 +84,8 @@ private:
 
     void switch_sort(Sort s);
 
+    void stop();
+
 private slots:
     void randomize();
     void sort();

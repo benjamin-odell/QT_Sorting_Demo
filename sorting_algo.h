@@ -1,8 +1,10 @@
 #ifndef SORTING_ALGO_H
 #define SORTING_ALGO_H
-
+#define _IS_ALIVE_ if(!is_alive) { return; }
 #include <QObject>
 #include <vector>
+
+
 
 class sorting_algo : public QObject
 {
@@ -16,11 +18,16 @@ public:
     void delay();
     QString get_name();
 
+    void set_alive(bool b);
+    bool is_active();
+
 private:
     int delay_time;
 
+
 protected:
     QString name;
+    bool is_alive = false;
 
     void swap(std::vector<int> &arr, int a, int b);
 
