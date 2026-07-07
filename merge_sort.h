@@ -8,7 +8,7 @@ class merge_sort : public sorting_algo
 {
     Q_OBJECT
 public:
-    merge_sort();
+    merge_sort(int d);
 };
 
 #endif // MERGE_SORT_H
