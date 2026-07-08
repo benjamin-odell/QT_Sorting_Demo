@@ -14,9 +14,11 @@ public:
 private:
     //vector holding arrays used for merge sort
     std::vector<std::vector<int>*> arrs;
+    std::vector<int>* a; //original arr
     void mergesort(std::vector<int>& arr);
     void merge(std::vector<int>& arr,std::vector<int>& a, std::vector<int>& b);
     void remove(std::vector<int>& arr);
+    void update(std::vector<int> nums);
 };
 
 #endif // MERGE_SORT_H

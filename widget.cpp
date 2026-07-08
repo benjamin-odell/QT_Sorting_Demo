@@ -72,6 +72,7 @@ Widget::Widget(QWidget *parent)
     combo_box->addItem("Insertion Sort");
     combo_box->addItem("Selection Sort");
     combo_box->addItem("Quick Sort");
+    combo_box->addItem("Merge Sort");
     connect(combo_box,SIGNAL(currentIndexChanged(int)),this,SLOT(select_sort()));
 
     main_layout->addWidget(combo_box);
@@ -136,9 +137,15 @@ void Widget::sort(){
 
 void Widget::update(std::vector<int> n)
 {
+    int padding = 0;
     for(int i = 0; i < bars.size(); i++){
         //reset all outlines to default
-        bars[i]->setRect(i * 15,0,10,-10 * nums[i]);
+        if(nums[i + padding] == 0){
+            i--;
+            padding++;
+            continue;
+        }
+        bars[i]->setRect((i + padding) * 15,0,10,-10 * nums[i + padding]);
         bars[i]->setPen(pens[0]);
     }
 
@@ -226,6 +233,9 @@ void Widget::switch_sort(Sort s)
         break;
     case QUICK:
         sorter = quicksort;
+        break;
+    case MERGE:
+        sorter = mergesort;
         break;
     }
 

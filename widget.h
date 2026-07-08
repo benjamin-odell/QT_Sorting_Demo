@@ -18,6 +18,7 @@
 #include "insertion_sort.h"
 #include "selection_sort.h"
 #include "quick_sort.h"
+#include "merge_sort.h"
 
 class Widget : public QWidget
 {
@@ -71,7 +72,8 @@ private:
     enum Sort{
         INSERTION,
         SELECTION,
-        QUICK
+        QUICK,
+        MERGE,
     };
 
     //sort selection combo box
@@ -81,6 +83,7 @@ private:
     sorting_algo* insertion = new insertion_sort(delay_time);
     sorting_algo* selection = new selection_sort(delay_time);
     sorting_algo* quicksort = new quick_sort(delay_time);
+    sorting_algo* mergesort = new merge_sort(delay_time);
 
     void switch_sort(Sort s);
 
