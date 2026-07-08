@@ -3,7 +3,11 @@
 merge_sort::merge_sort(int d) : sorting_algo(d) {}
 
 void merge_sort::sort(std::vector<int> &arr) {
-  mergesort(arr);
+  arrays.clear();
+  std::vector<int> a = arr;
+  array = &arr;
+  arrays.push_back(&a);
+  mergesort(a);
   emit sorted();
 }
 
@@ -12,6 +16,11 @@ void merge_sort::mergesort(std::vector<int> &arr) {
   // an array with one element is always sorted
   if (arr.size() <= 1)
     return;
+
+  update();
+
+  // remove arr from list of arrays
+  remove(arr);
 
   // split array into two sub arrays
   std::vector<int> l;
@@ -30,15 +39,26 @@ void merge_sort::mergesort(std::vector<int> &arr) {
     h.push_back(arr[i]);
   }
 
+  // push both arrays onto the list of arrays
+  arrays.push_back(&l);
+  arrays.push_back(&h);
+  update();
+
   // merge sort both arrays
   mergesort(l);
   _IS_ALIVE_
   mergesort(h);
   _IS_ALIVE_
 
+  remove(l);
+  remove(h);
+
   // combin arrays into sorted array
   merge(arr, l, h);
-  emit updated({});
+
+  arrays.push_back(&arr);
+  update();
+
   _IS_ALIVE_
 }
 
@@ -65,6 +85,22 @@ void merge_sort::merge(std::vector<int> &arr, std::vector<int> &a,
   }
 }
 
-void merge_sort::remove(std::vector<int> &arr) {}
+void merge_sort::remove(std::vector<int> &arr) {
+  auto it = std::find(arrays.begin(), arrays.end(), &arr);
 
-void merge_sort::update(std::vector<int> nums) {}
+  if (it != arrays.end()) {
+    // arr is in list of arrays
+    arrays.erase(it); // remove from list of arrays
+  }
+}
+
+void merge_sort::update(std::vector<int> nums) {
+  array->clear();
+  for (auto a : arrays) {
+    for (int n : *a) {
+      array->push_back(n);
+    }
+  }
+
+  emit updated(nums);
+}
