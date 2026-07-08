@@ -132,9 +132,17 @@ void Widget::sort() {
 }
 
 void Widget::update(std::vector<int> n) {
-  for (int i = 0; i < bars.size(); i++) {
+  int padding = 0;
+  for (int i = 0; (i < bars.size() && (i + padding < nums.size())); i++) {
+    // check if current value is zero
+    if (nums[i + padding] == 0) {
+      padding++;
+      i--;
+      continue;
+    }
+
     // reset all outlines to default
-    bars[i]->setRect((i) * 15, 0, 10, -10 * nums[i]);
+    bars[i]->setRect((i + padding) * 15, 0, 10, -10 * nums[i + padding]);
     bars[i]->setPen(pens[0]);
   }
 

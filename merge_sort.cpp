@@ -50,11 +50,11 @@ void merge_sort::mergesort(std::vector<int> &arr) {
   mergesort(h);
   _IS_ALIVE_
 
-  remove(l);
-  remove(h);
-
   // combin arrays into sorted array
   merge(arr, l, h);
+
+  remove(l);
+  remove(h);
 
   arrays.push_back(&arr);
   update();
@@ -96,11 +96,23 @@ void merge_sort::remove(std::vector<int> &arr) {
 
 void merge_sort::update(std::vector<int> nums) {
   array->clear();
+  int i = 0;
+  std::vector<int> indices = {};
   for (auto a : arrays) {
     for (int n : *a) {
       array->push_back(n);
+      // check if n is in nums
+      auto it = std::find(nums.begin(), nums.end(), n);
+      if (it != nums.end()) {
+        // n is in nums, add to indices
+        indices.push_back(i);
+        // remove n from nums
+        nums.erase(it);
+      }
+      i++;
     }
+    array->push_back(0);
   }
 
-  emit updated(nums);
+  emit updated(indices);
 }
