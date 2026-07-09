@@ -25,7 +25,7 @@ void merge_sort::mergesort(std::vector<int> &arr) {
 
   // get mid point
   int mid = arr.size() / 2;
-  update({arr[mid]});
+  update({&arr[mid]});
 
   // copy element over to lower array
   for (int i = 0; i < mid; i++) {
@@ -39,7 +39,7 @@ void merge_sort::mergesort(std::vector<int> &arr) {
 
   // remove an replace
   remove(arr, {&l, &h});
-  update({l.back(), h.front()});
+  update({&l.back(), &h.front()});
 
   // merge sort both arrays
   mergesort(l);
@@ -51,9 +51,9 @@ void merge_sort::mergesort(std::vector<int> &arr) {
   merge(arr, l, h);
 
   remove(l);
-  remove(h);
+  remove(h, {&arr});
 
-  arrays.push_back(&arr);
+  // arrays.push_back(&arr);
   update();
 
   _IS_ALIVE_
@@ -98,15 +98,15 @@ void merge_sort::remove(std::vector<int> &arr,
   }
 }
 
-void merge_sort::update(std::vector<int> nums) {
+void merge_sort::update(std::vector<int *> nums) {
   array->clear();
   int i = 0;
   std::vector<int> indices = {};
   for (auto a : arrays) {
-    for (int n : *a) {
-      array->push_back(n);
+    for (int j = 0; j < a->size(); j++) {
+      array->push_back(a->at(j));
       // check if n is in nums
-      auto it = std::find(nums.begin(), nums.end(), n);
+      auto it = std::find(nums.begin(), nums.end(), &a->at(j));
       if (it != nums.end()) {
         // n is in nums, add to indices
         indices.push_back(i);
@@ -115,7 +115,7 @@ void merge_sort::update(std::vector<int> nums) {
       }
       i++;
     }
-    array->push_back(0);
+    array->push_back(-1);
   }
 
   emit updated(indices);

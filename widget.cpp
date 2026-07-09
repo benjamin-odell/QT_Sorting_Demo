@@ -135,7 +135,7 @@ void Widget::update(std::vector<int> n) {
   int padding = 0;
   for (int i = 0; (i < bars.size() && (i + padding < nums.size())); i++) {
     // check if current value is zero
-    if (nums[i + padding] == 0) {
+    if (nums[i + padding] == -1) {
       padding++;
       i--;
       continue;
