@@ -47,11 +47,15 @@ void merge_sort::mergesort(std::vector<int> &arr) {
   mergesort(h);
   _IS_ALIVE_
 
+  // add arr to arrays
+  auto it = std::find(arrays.begin(), arrays.end(), &l);
+  arrays.insert(it, &arr);
+
   // combin arrays into sorted array
   merge(arr, l, h);
 
   remove(l);
-  remove(h, {&arr});
+  remove(h);
 
   // arrays.push_back(&arr);
   update();
@@ -66,19 +70,27 @@ void merge_sort::merge(std::vector<int> &arr, std::vector<int> &a,
   // fill in the arr
   while (!a.empty() || !b.empty()) {
     _IS_ALIVE_
+
     if (a.empty()) {
+      update({&b[0]});
       arr.push_back(b.front());
+
       b.erase(b.begin());
     } else if (b.empty()) {
+      update({&a[0]});
       arr.push_back(a.front());
       a.erase(a.begin());
     } else if (a.front() < b.front()) {
+      update({&a[0], &b[0]});
       arr.push_back(a.front());
       a.erase(a.begin());
     } else {
+      update({&a[0], &b[0]});
       arr.push_back(b.front());
       b.erase(b.begin());
     }
+
+    update({&arr.back()});
   }
 }
 
