@@ -19,15 +19,13 @@ void merge_sort::mergesort(std::vector<int> &arr) {
 
   update();
 
-  // remove arr from list of arrays
-  remove(arr);
-
   // split array into two sub arrays
   std::vector<int> l;
   std::vector<int> h;
 
   // get mid point
   int mid = arr.size() / 2;
+  update({arr[mid]});
 
   // copy element over to lower array
   for (int i = 0; i < mid; i++) {
@@ -39,10 +37,9 @@ void merge_sort::mergesort(std::vector<int> &arr) {
     h.push_back(arr[i]);
   }
 
-  // push both arrays onto the list of arrays
-  arrays.push_back(&l);
-  arrays.push_back(&h);
-  update();
+  // remove an replace
+  remove(arr, {&l, &h});
+  update({l.back(), h.front()});
 
   // merge sort both arrays
   mergesort(l);
@@ -85,10 +82,17 @@ void merge_sort::merge(std::vector<int> &arr, std::vector<int> &a,
   }
 }
 
-void merge_sort::remove(std::vector<int> &arr) {
+void merge_sort::remove(std::vector<int> &arr,
+                        std::vector<std::vector<int> *> r) {
   auto it = std::find(arrays.begin(), arrays.end(), &arr);
 
   if (it != arrays.end()) {
+    // replace with arrays from r
+    for (std::vector<int> *a : r) {
+      it = arrays.insert(it, a);
+      it = std::next(it);
+    }
+
     // arr is in list of arrays
     arrays.erase(it); // remove from list of arrays
   }
