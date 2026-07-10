@@ -152,6 +152,8 @@ void Widget::update(std::vector<int> n) {
       bars[n[i]]->setPen(pens[i + 1]);
   }
 
+  fit();
+
   // update view
   scene->update();
   view->update();
@@ -170,6 +172,8 @@ void Widget::sorted() {
 
     bars[i]->setPen(pens[0]);
   }
+
+  fit();
 
   // update scene
   scene->update();
@@ -250,6 +254,14 @@ void Widget::stop() {
   create_bars();
 }
 
+void Widget::fit() {
+  // centers display on the bars
+  QRectF rect = scene->itemsBoundingRect();
+  scene->setSceneRect(QRectF(rect.left() - 50, rect.top() - 50,
+                             rect.width() + 100, rect.height() + 50));
+  view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+}
+
 void Widget::create_bars() {
   // clear scene
   clear();
@@ -288,6 +300,8 @@ void Widget::create_bars() {
     qDebug() << nums[i];
     bars.append(scene->addRect(i * 15, 0, 10, -10 * nums[i], pens[0], brush));
   }
+
+  fit();
 
   // update scene
   scene->update();
