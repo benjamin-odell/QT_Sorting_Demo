@@ -16,6 +16,7 @@ qt_add_executable(Sorting_Demo
     selection_sort.h selection_sort.cpp
     quick_sort.h quick_sort.cpp
     merge_sort.h merge_sort.cpp
+    bubble_sort.h bubble_sort.cpp
 
 
 )

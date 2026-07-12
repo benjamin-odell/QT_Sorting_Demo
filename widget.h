@@ -1,6 +1,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include "bubble_sort.h"
 #include "insertion_sort.h"
 #include "merge_sort.h"
 #include "quick_sort.h"
@@ -70,6 +71,7 @@ private:
   enum Sort {
     INSERTION,
     SELECTION,
+    BUBBLE,
     QUICK,
     MERGE,
   };
@@ -80,6 +82,7 @@ private:
   // create base for each sorting algorithm
   sorting_algo *insertion = new insertion_sort(delay_time);
   sorting_algo *selection = new selection_sort(delay_time);
+  sorting_algo *bubblesort = new bubble_sort(delay_time);
   sorting_algo *quicksort = new quick_sort(delay_time);
   sorting_algo *mergesort = new merge_sort(delay_time);
 

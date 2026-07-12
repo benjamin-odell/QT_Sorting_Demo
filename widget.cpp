@@ -67,6 +67,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent) {
   combo_box = new QComboBox(this);
   combo_box->addItem("Insertion Sort");
   combo_box->addItem("Selection Sort");
+  combo_box->addItem("Bubble Sort");
   combo_box->addItem("Quick Sort");
   combo_box->addItem("Merge Sort");
   connect(combo_box, SIGNAL(currentIndexChanged(int)), this,
@@ -228,6 +229,9 @@ void Widget::switch_sort(Sort s) {
     break;
   case SELECTION:
     sorter = selection;
+    break;
+  case BUBBLE:
+    sorter = bubblesort;
     break;
   case QUICK:
     sorter = quicksort;
