@@ -8,6 +8,7 @@ class heap_sort : public sorting_algo {
   Q_OBJECT
 public:
   heap_sort(int d);
+  void sort(std::vector<int> &arr) override;
 
 private:
   void heapify(std::vector<int> &arr, int i);

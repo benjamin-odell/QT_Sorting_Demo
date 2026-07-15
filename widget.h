@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include "bubble_sort.h"
+#include "heap_sort.h"
 #include "insertion_sort.h"
 #include "merge_sort.h"
 #include "quick_sort.h"
@@ -74,6 +75,7 @@ private:
     BUBBLE,
     QUICK,
     MERGE,
+    HEAP,
   };
 
   // sort selection combo box
@@ -85,6 +87,7 @@ private:
   sorting_algo *bubblesort = new bubble_sort(delay_time);
   sorting_algo *quicksort = new quick_sort(delay_time);
   sorting_algo *mergesort = new merge_sort(delay_time);
+  sorting_algo *heapsort = new heap_sort(delay_time);
 
   void switch_sort(Sort s);
 

@@ -70,6 +70,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent) {
   combo_box->addItem("Bubble Sort");
   combo_box->addItem("Quick Sort");
   combo_box->addItem("Merge Sort");
+  combo_box->addItem("Heap Sort");
   connect(combo_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(select_sort()));
 
@@ -238,6 +239,9 @@ void Widget::switch_sort(Sort s) {
     break;
   case MERGE:
     sorter = mergesort;
+    break;
+  case HEAP:
+    sorter = heapsort;
     break;
   }
 
