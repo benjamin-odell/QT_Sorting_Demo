@@ -4,15 +4,26 @@ heap_sort::heap_sort(int d) : sorting_algo(d) {}
 
 void heap_sort::sort(std::vector<int> &arr) {
   // heapify the array
-  heapify(arr, 0);
+  last = arr.size();
+  build_max_heap(arr);
   emit updated({});
+
+  // swap last element with first element
+  for (int i = arr.size() - 1; i >= 0; i--) {
+    emit updated({i, 0});
+    swap(arr, 0, i);
+    emit updated({0, i});
+    last--;
+    heapify(arr, 0);
+    emit updated({});
+  }
 
   emit sorted();
 }
 
 void heap_sort::heapify(std::vector<int> &arr, int i) {
 
-  if (i >= arr.size())
+  if (i >= last)
     return;
 
   // check if i is larger then its children
@@ -20,19 +31,26 @@ void heap_sort::heapify(std::vector<int> &arr, int i) {
   int c2 = c1 + 1;
 
   // if i has no children return
-  if (c1 >= arr.size())
+  if (c1 >= last)
     return;
 
   int max = c1;
   // find the largest child
-  if (c2 < arr.size() && arr[c2] > arr[c1])
+  if (c2 < last && arr[c2] > arr[c1])
     max = c2;
 
   // swap with child if child is large
   if (arr[max] > arr[i])
     swap(arr, i, max);
 
-  // heapify on children
-  heapify(arr, c1);
-  heapify(arr, c2);
+  // heapify on max
+  if (max < last)
+    heapify(arr, max);
+}
+
+void heap_sort::build_max_heap(std::vector<int> &arr) {
+  // run heapify for each parent
+  for (int i = arr.size() / 2; i >= 0; i--) {
+    heapify(arr, i);
+  }
 }

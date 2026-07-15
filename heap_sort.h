@@ -11,7 +11,9 @@ public:
   void sort(std::vector<int> &arr) override;
 
 private:
+  int last;
   void heapify(std::vector<int> &arr, int i);
+  void build_max_heap(std::vector<int> &arr);
 };
 
 #endif // HEAP_SORT_H
