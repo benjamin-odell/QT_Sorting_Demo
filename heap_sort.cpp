@@ -33,15 +33,24 @@ void heap_sort::heapify(std::vector<int> &arr, int i) {
   // if i has no children return
   if (c1 >= last)
     return;
+  _IS_ALIVE_
+  if (c1 < last && c2 < last)
+    emit updated({i, c1, c2});
 
   int max = c1;
   // find the largest child
   if (c2 < last && arr[c2] > arr[c1])
     max = c2;
 
+  _IS_ALIVE_
+  emit updated({i, max});
+
   // swap with child if child is large
   if (arr[max] > arr[i])
     swap(arr, i, max);
+
+  _IS_ALIVE_
+  emit updated({max, i});
 
   // heapify on max
   if (max < last)
