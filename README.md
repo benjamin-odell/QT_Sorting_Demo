@@ -2,49 +2,19 @@
 
 The aim of this project is the demo various sorting algorithms using QT and C++
 
-## Second Level Heading
+## Overview
 
-Paragraph.
+This application features six sorting algorithms.
+### Insertion $O(n^2)$
+Devides the array into two partitions: a sorted and an unsorted. The first element is assumed to be sorted. Starting with the second element: remove from unsorted partion, swap with elements in the sorted partion until element is in correct place. This procededs untill no elements are in the unsorted partition.
 
-- bullet
-+ other bullet
-* another bullet
-    * child bullet
-
-1. ordered
-2. next ordered
-
-### Third Level Heading
-
-Some *italic* and **bold** text and `inline code`.
-
-An empty line starts a new paragraph.
-
-Use two spaces at the end  
-to force a line break.
-
-A horizontal ruler follows:
-
----
-
-Add links inline like [this link to the Qt homepage](https://www.qt.io),
-or with a reference like [this other link to the Qt homepage][1].
-
-    Add code blocks with
-    four spaces at the front.
-
-> A blockquote
-> starts with >
->
-> and has the same paragraph rules as normal text.
-
-First Level Heading in Alternate Style
-======================================
-
-Paragraph.
-
-Second Level Heading in Alternate Style
----------------------------------------
+### Selection $O(n^2)$
+Loops through array finding the smallest element. Then swap with the first element that hasn't been found this way. This process construct the sorted array the way one might natural try to do it, by picking the smallest element and then placing it a the begining.
+### Bubble $O(n^2)$
+Loops through the array n times. During each itiration loop through the array, and swap each element with the previous element if the previous element is larger. This process places the largers element in the array at the end of the list. This in effect is almost the reverse of the selection sort. As you construct the array from the largest element to the smallest.
+### Quick $O(n\log n)$ worse case: $O(n^2)$
+### Merge $O(n\log n)$
+### Heap $O(n\log n)$
 
 ## Sources
 * [QT](https://www.qt.io/)
