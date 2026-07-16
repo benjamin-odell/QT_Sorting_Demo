@@ -53,8 +53,8 @@ private:
   QSpinBox *rand_num;
 
   // time to delay between sorting actions
-  const int base_delay_time = 250;
-  int delay_time = base_delay_time;
+  const double base_delay_time = 250;
+  double delay_time = base_delay_time;
 
   // graphics
   QBrush brush;
@@ -94,6 +94,8 @@ private:
   void stop();
 
   void fit();
+
+  double delayed = 0;
 
 private slots:
   void randomize();

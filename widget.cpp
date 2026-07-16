@@ -56,7 +56,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent) {
   // Spin box for random number
   rand_num = new QSpinBox(this);
   rand_num->setMinimum(5);
-  rand_num->setMaximum(50);
+  rand_num->setMaximum(1000);
 
   input_row->addWidget(rand_num);
   input_row->addWidget(random);
@@ -153,16 +153,16 @@ void Widget::update(std::vector<int> n) {
     if (n[i] >= 0)
       bars[n[i]]->setPen(pens[i + 1]);
   }
+  delayed += delay_time;
+  if (delayed >= 5) {
+    fit();
+    // update view
+    scene->update();
+    view->update();
+    sorter->delay();
 
-  fit();
-
-  // update view
-  scene->update();
-  view->update();
-
-  // qApp->processEvents();
-
-  sorter->delay();
+    delayed = 0;
+  }
 }
 
 void Widget::sorted() {
@@ -196,6 +196,7 @@ void Widget::select_sort() {
 
 void Widget::change_speed(int amt) {
   // change label
+  int max_speed = 8192;
   QString s_time = speed->text();
   s_time.chop(1);
   int s = s_time.toInt();
@@ -207,8 +208,8 @@ void Widget::change_speed(int amt) {
   // don't let speed go below one
   if (s <= 1)
     s = 1;
-  if (s >= 64)
-    s = 64;
+  if (s >= max_speed)
+    s = max_speed;
 
   // set delay time and update sorter
   delay_time = base_delay_time / s;

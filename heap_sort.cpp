@@ -10,11 +10,14 @@ void heap_sort::sort(std::vector<int> &arr) {
 
   // swap last element with first element
   for (int i = arr.size() - 1; i >= 0; i--) {
+    _IS_ALIVE_
     emit updated({i, 0});
     swap(arr, 0, i);
+    _IS_ALIVE_
     emit updated({0, i});
     last--;
     heapify(arr, 0);
+    _IS_ALIVE_
     emit updated({});
   }
 
