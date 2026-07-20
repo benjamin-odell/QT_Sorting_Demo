@@ -5,6 +5,8 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 
 qt_standard_project_setup()
 
+set(CMAKE_AUTORCC ON)
+
 qt_add_executable(Sorting_Demo
     WIN32 MACOSX_BUNDLE
     main.cpp
@@ -18,7 +20,7 @@ qt_add_executable(Sorting_Demo
     merge_sort.h merge_sort.cpp
     bubble_sort.h bubble_sort.cpp
     heap_sort.h heap_sort.cpp
-
+    resource.qrc
 
 )
 

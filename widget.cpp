@@ -1,12 +1,17 @@
 #include "widget.h"
 #include <vector>
-// #include <QDebug>
+ #include <QDebug>
 #include <QApplication>
 #include <QSignalMapper>
+#include <QIcon>
+#include <QFile>
 
 Widget::Widget(QWidget *parent) : QWidget(parent) {
   // Init the window with inital paramiters
-  setWindowTitle("Sorting Algo Test");
+  setWindowTitle("Sorting Algorithms");
+  QIcon icon(":/icons/icon.svg");
+  setWindowIcon(icon);
+
   // make window a good size
   resize(500, 700);
 
